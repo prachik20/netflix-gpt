@@ -1,10 +1,15 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const SignIn = () => {
   const [isSignIn, setIsSignIn] = useState(true);
-  const [isFormValid, setIsFormValid] = useState(null);
+  const [isErrorMessage, setErrorMessage] = useState(null);
 
   const name = useRef(null);
   const email = useRef(null);
@@ -21,7 +26,45 @@ const SignIn = () => {
       email.current.value,
       password.current.value
     );
-    setIsFormValid(message);
+    setErrorMessage(message);
+    if (message) return;
+
+    if (!isSignIn) {
+      //sign up logic
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "" + errorMessage);
+        });
+    } else {
+      //sign in logic
+
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "" + errorMessage);
+        });
+    }
   };
 
   return (
@@ -60,7 +103,11 @@ const SignIn = () => {
           placeholder="Password"
           className="p-3 my-3 rounded-sm w-full bg-transparent border border-white border-opacity-40"
         />
-        <p className="text-sm text-red-600">{isFormValid}</p>
+        <p className="text-sm text-red-600">
+          {" "}
+          {/* <img className="text-red-600" src="https://cdn-icons-png.flaticon.com/128/2198/2198359.png" /> */}
+          {isErrorMessage}
+        </p>
         <button
           className="p-2 my-6 bg-red-600 rounded-sm w-full"
           onClick={handleValidation}
