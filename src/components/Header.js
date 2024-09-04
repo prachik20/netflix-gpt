@@ -1,8 +1,10 @@
-import { useSelector } from "react-redux";
-import { signOut } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { addUser, removeUser } from "../utils/userSlice";
+import { useEffect } from "react";
 
 const Header = () => {
   // const [isDropdownVisible, setisDropdownVisible] = useState(false);
@@ -16,13 +18,26 @@ const Header = () => {
   // };
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName } = user;
+
+        dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+  }, []);
 
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => {
-        navigate("/");
-      })
+      .then(() => {})
       .catch((error) => {
         navigate("/error");
       });
