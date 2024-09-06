@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useEffect } from "react";
+import { USER_AVATAR, NETFLIX_LOGO } from "../utils/constants";
 
 const Header = () => {
   // const [isDropdownVisible, setisDropdownVisible] = useState(false);
@@ -22,7 +22,7 @@ const Header = () => {
   const user = useSelector((store) => store.user);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName } = user;
 
@@ -33,6 +33,9 @@ const Header = () => {
         navigate("/");
       }
     });
+
+    //Unsubscribe when component unmounts
+    return () => unsubscribe();
   }, []);
 
   const handleSignOut = () => {
@@ -46,18 +49,14 @@ const Header = () => {
   return (
     <>
       <div className="absolute px-16  bg-gradient-to-b from-black w-full z-10 flex justify-between items-center">
-        <img
-          className="w-40 "
-          src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-          alt="logo"
-        />
+        <img className="w-40 " src={NETFLIX_LOGO} alt="netflix logo" />
         {user && (
           <div
             className="flex"
             // onMouseEnter={handleMouseEnter}
             // onMouseLeave={handleMouseLeave}
           >
-            <img src="https://occ-0-2215-784.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABXz4LMjJFidX8MxhZ6qro8PBTjmHbxlaLAbk45W1DXbKsAIOwyHQPiMAuUnF1G24CLi7InJHK4Ge4jkXul1xIW49Dr5S7fc.png?r=e6e" />
+            <img src={USER_AVATAR} alt="account logo" />
             <button className="ml-2" onClick={handleSignOut}>
               Sign out
             </button>
