@@ -7,7 +7,6 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
@@ -15,7 +14,6 @@ const SignIn = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [isErrorMessage, setErrorMessage] = useState(null);
 
-  const navigate = useNavigate();
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
