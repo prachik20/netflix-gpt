@@ -10,7 +10,7 @@ const VideoBg = ({ movieId }) => {
   return (
     <div className="w-screen ">
       <iframe
-        className="w-screen aspect-video"
+        className="w-screen aspect-video"  
         src={
           "https://www.youtube.com/embed/" +
           movieTrailer?.key +
