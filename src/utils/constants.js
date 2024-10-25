@@ -14,3 +14,12 @@ export const MOVIES_OPTION = {
 };
 
 export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/";
+
+export const BG_IMG =
+  "https://assets.nflxext.com/ffe/siteui/vlv3/dae1f45f-c2c5-4a62-8d58-6e1b0c6b2d8e/ed364e5c-e3d7-4631-baa4-3fb3052492b2/FR-en-20240827-TRIFECTA-perspective_WEB_961e038d-bdc8-486e-a174-2b23391fdb25_large.jpg";
+
+export const SUPPORTED_LANGS = [
+  { identifier: "en", name: "English" },
+  { identifier: "hindi", name: "Hindi" },
+  { identifier: "french", name: "French" },
+];

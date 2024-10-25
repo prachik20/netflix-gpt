@@ -4,7 +4,8 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useEffect } from "react";
-import { USER_AVATAR, NETFLIX_LOGO } from "../utils/constants";
+import { USER_AVATAR, NETFLIX_LOGO, SUPPORTED_LANGS } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/gptSlice";
 
 const Header = () => {
   // const [isDropdownVisible, setisDropdownVisible] = useState(false);
@@ -20,6 +21,10 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearchView());
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -56,8 +61,26 @@ const Header = () => {
             // onMouseEnter={handleMouseEnter}
             // onMouseLeave={handleMouseLeave}
           >
-            <img src={USER_AVATAR} alt="account logo" />
-            <button className="ml-2" onClick={handleSignOut}>
+            <select>
+              {SUPPORTED_LANGS.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+
+            <button
+              className="mx-2 py-1.5 px-2 bg-slate-400  text-white"
+              onClick={handleGptSearchClick}
+            >
+              Gpt Search
+            </button>
+            <img
+              className="object-contain"
+              src={USER_AVATAR}
+              alt="account logo"
+            />
+            <button className="ml-2 text-white" onClick={handleSignOut}>
               Sign out
             </button>
           </div>
