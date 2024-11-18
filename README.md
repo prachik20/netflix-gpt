@@ -51,4 +51,7 @@
 - TMDB image CDN URL
 - Made browse page look good using Tailwind
 - usePopularMovies, useTopRatedMovies, useUpComingMovies Custom Hooks
-- 
+- GPT Search Page
+- GPT Search Bar
+- Multi language Search Bar
+-
