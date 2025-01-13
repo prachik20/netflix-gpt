@@ -8,8 +8,7 @@ export const MOVIES_OPTION = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NTk4ODQ1NDhjNDhlNjE2ZjNjYmU5NjY3N2ViNjM1ZSIsIm5iZiI6MTcyNTUyNzM3NC42MDA0MTQsInN1YiI6IjYxYTc0ZTIzMjQ5NWFiMDA0MzAxODIyNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.48bTgbkBk9tY1F-TlEmUJ4F6NKFCTz-i-TA52NGVrcs",
+    Authorization: "Bearer " + process.env.REACT_APP_TMDB_KEY,
   },
 };
 
@@ -23,3 +22,5 @@ export const SUPPORTED_LANGS = [
   { identifier: "hindi", name: "Hindi" },
   { identifier: "french", name: "French" },
 ];
+
+export const GEMINI_KEY = process.env.REACT_APP_API_KEY;
