@@ -60,17 +60,17 @@ const Header = () => {
 
   return (
     <>
-      <div className="absolute px-16  bg-gradient-to-b from-black w-full z-10 flex justify-between items-center">
-        <img className="w-40 " src={NETFLIX_LOGO} alt="netflix logo" />
+      <div className="absolute px-16  bg-gradient-to-b from-black w-full z-10 flex flex-col md:flex-row justify-between items-center">
+        <img
+          className="w-40 mx-auto md:mx-0"
+          src={NETFLIX_LOGO}
+          alt="netflix logo"
+        />
         {user && (
-          <div
-            className="flex"
-            // onMouseEnter={handleMouseEnter}
-            // onMouseLeave={handleMouseLeave}
-          >
+          <div className="flex ">
             {showGptSearch && (
               <select
-                className="m-2 p-2 content-center bg-gray-700 text-white rounded-sm"
+                className="m-2 p-2 content-center bg-gray-700 text-white rounded-sm "
                 onChange={handleLanguageChange}
               >
                 {SUPPORTED_LANGS.map((lang) => (
@@ -82,17 +82,20 @@ const Header = () => {
             )}
 
             <button
-              className="m-2 px-2 py-2 bg-slate-400  text-white rounded-sm"
+              className="m-2 text-nowrap px-2 py-2 bg-slate-400  text-white rounded-md "
               onClick={handleGptSearchClick}
             >
               {showGptSearch ? "Home Page" : "GPT Search"}
             </button>
             <img
-              className="object-contain"
+              className="hidden md:block object-contain"
               src={USER_AVATAR}
               alt="account logo"
             />
-            <button className="ml-2 text-white" onClick={handleSignOut}>
+            <button
+              className="ml-2 text-white text-nowrap"
+              onClick={handleSignOut}
+            >
               Sign out
             </button>
           </div>
